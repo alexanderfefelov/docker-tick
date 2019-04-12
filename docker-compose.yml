@@ -5,11 +5,22 @@ services:
   telegraf: # https://hub.docker.com/_/telegraf
     build: telegraf
     image: tick_telegraf
+    privileged: true
+    environment:
+      HOST_ETC: /host/etc
+      HOST_PROC: /host/proc
+      HOST_SYS: /host/sys
+      HOST_MOUNT_PREFIX: /host
     ports:
       - 5514:5514/udp
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
+      - /:/host:ro
+      - /etc:/host/etc:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /var/run/utmp:/var/run/utmp:ro
       - telegraf_conf:/etc/telegraf
     links:
       - influxdb
