@@ -1,0 +1,65 @@
+version: "3.3"
+
+services:
+
+  telegraf: # https://hub.docker.com/_/telegraf
+    build: telegraf
+    image: tick_telegraf
+    ports:
+      - 5514:5514/udp
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+      - telegraf_conf:/etc/telegraf
+    links:
+      - influxdb
+
+  influxdb: # https://hub.docker.com/_/influxdb
+    build: influxdb
+    image: tick_influxdb
+    ports:
+      - 8086:8086
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - influxdb_conf:/etc/influxdb
+      - influxdb_data:/var/lib/influxdb
+
+  chronograf: # https://hub.docker.com/_/chronograf
+    build: chronograf
+    image: tick_chronograf
+    environment:
+      INFLUXDB_URL: http://influxdb:8086
+      KAPACITOR_URL: http://kapacitor:9092
+    ports:
+      - 8888:8888
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - chronograf_data:/var/lib/chronograf
+      - chronograf_share:/usr/share/chronograf
+    links:
+      - influxdb
+      - kapacitor
+
+  kapacitor: # https://hub.docker.com/_/kapacitor
+    build: kapacitor
+    image: tick_kapacitor
+    environment:
+      KAPACITOR_HOSTNAME: kapacitor
+      KAPACITOR_INFLUXDB_0_URLS_0: http://influxdb:8086
+    ports:
+      - 9092:9092
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - kapacitor_conf:/etc/kapacitor
+      - kapacitor_data:/var/lib/kapacitor
+    links:
+      - influxdb
+
+volumes:
+  telegraf_conf:
+  influxdb_conf:
+  influxdb_data:
+  chronograf_data:
+  chronograf_share:
+  kapacitor_conf:
+  kapacitor_data:
