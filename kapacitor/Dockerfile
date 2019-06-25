@@ -1,3 +1,3 @@
-FROM kapacitor:1.5.2
+FROM kapacitor:1.5.3
 
 ADD container/ /
