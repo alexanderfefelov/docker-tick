@@ -6,7 +6,7 @@ Run
 
 and point your browser to <http://localhost:8888>.
 
-# Linux and Rsyslog
+## Linux and Rsyslog
 
 `/etc/rsyslog.d/10-rsyslog.conf`:
 
