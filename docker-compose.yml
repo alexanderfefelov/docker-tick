@@ -24,6 +24,11 @@ services:
       - telegraf_conf:/etc/telegraf
     links:
       - influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
 
   influxdb: # https://hub.docker.com/_/influxdb
     build: influxdb
@@ -36,6 +41,11 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - influxdb_conf:/etc/influxdb
       - influxdb_data:/var/lib/influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
 
   chronograf: # https://hub.docker.com/_/chronograf
     build: chronograf
@@ -52,6 +62,11 @@ services:
     links:
       - influxdb
       - kapacitor
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
 
   kapacitor: # https://hub.docker.com/_/kapacitor
     build: kapacitor
@@ -67,6 +82,11 @@ services:
       - kapacitor_data:/var/lib/kapacitor
     links:
       - influxdb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
 
 volumes:
   telegraf_conf:
