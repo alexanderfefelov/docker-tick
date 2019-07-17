@@ -40,6 +40,7 @@ services:
       GOMAXPROCS: 3
     ports:
       - 8086:8086
+      - 2003:2003
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - influxdb_conf:/etc/influxdb
