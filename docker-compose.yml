@@ -11,6 +11,8 @@ services:
       HOST_PROC: /host/proc
       HOST_SYS: /host/sys
       HOST_MOUNT_PREFIX: /host
+      GOGC: 40
+      GOMAXPROCS: 3
     ports:
       - 5514:5514/udp
     volumes:
@@ -35,6 +37,7 @@ services:
     image: ${COMPOSE_PROJECT_NAME}_influxdb
     environment:
       GOGC: 40
+      GOMAXPROCS: 3
     ports:
       - 8086:8086
     volumes:
@@ -53,6 +56,8 @@ services:
     environment:
       INFLUXDB_URL: http://influxdb:8086
       KAPACITOR_URL: http://kapacitor:9092
+      GOGC: 40
+      GOMAXPROCS: 3
     ports:
       - 8888:8888
     volumes:
@@ -75,6 +80,8 @@ services:
     environment:
       KAPACITOR_HOSTNAME: kapacitor
       KAPACITOR_INFLUXDB_0_URLS_0: http://influxdb:8086
+      GOGC: 40
+      GOMAXPROCS: 3
     ports:
       - 9092:9092
     volumes:
