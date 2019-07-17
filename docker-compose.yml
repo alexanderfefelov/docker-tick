@@ -4,7 +4,7 @@ services:
 
   telegraf: # https://hub.docker.com/_/telegraf
     build: telegraf
-    image: tick_telegraf
+    image: ${COMPOSE_PROJECT_NAME}_telegraf
     privileged: true
     environment:
       HOST_ETC: /host/etc
@@ -32,7 +32,7 @@ services:
 
   influxdb: # https://hub.docker.com/_/influxdb
     build: influxdb
-    image: tick_influxdb
+    image: ${COMPOSE_PROJECT_NAME}_influxdb
     environment:
       GOGC: 40
     ports:
@@ -49,7 +49,7 @@ services:
 
   chronograf: # https://hub.docker.com/_/chronograf
     build: chronograf
-    image: tick_chronograf
+    image: ${COMPOSE_PROJECT_NAME}_chronograf
     environment:
       INFLUXDB_URL: http://influxdb:8086
       KAPACITOR_URL: http://kapacitor:9092
@@ -70,7 +70,7 @@ services:
 
   kapacitor: # https://hub.docker.com/_/kapacitor
     build: kapacitor
-    image: tick_kapacitor
+    image: ${COMPOSE_PROJECT_NAME}_kapacitor
     command: ["wait-for-it.sh", "--timeout=0", "influxdb:8086", "--", "kapacitord"]
     environment:
       KAPACITOR_HOSTNAME: kapacitor
