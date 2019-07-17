@@ -6,6 +6,7 @@ services:
     build: telegraf
     image: ${COMPOSE_PROJECT_NAME}_telegraf
     privileged: true
+    network_mode: host
     environment:
       HOST_ETC: /host/etc
       HOST_PROC: /host/proc
@@ -13,8 +14,6 @@ services:
       HOST_MOUNT_PREFIX: /host
       GOGC: 40
       GOMAXPROCS: 3
-    ports:
-      - 5514:5514/udp
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
@@ -24,8 +23,6 @@ services:
       - /sys:/host/sys:ro
       - /var/run/utmp:/var/run/utmp:ro
       - telegraf_conf:/etc/telegraf
-    links:
-      - influxdb
     logging:
       driver: "json-file"
       options:
