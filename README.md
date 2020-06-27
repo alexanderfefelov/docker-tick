@@ -6,18 +6,20 @@ Run
 
 and point your browser to <http://localhost:8888>.
 
-## Linux and Rsyslog
+## Log collection
 
-`/etc/rsyslog.d/10-rsyslog.conf`:
+- Linux and Rsyslog
 
-```
-$ActionQueueFileName queue
-$ActionQueueMaxDiskSpace 500M
-$ActionQueueSaveOnShutdown on
-$ActionQueueType LinkedList
-$ActionResumeRetryCount -1
+    `/etc/rsyslog.d/10-rsyslog.conf`:
 
-$WorkDirectory /var/spool/rsyslog
+    ```
+    $ActionQueueFileName queue
+    $ActionQueueMaxDiskSpace 500M
+    $ActionQueueSaveOnShutdown on
+    $ActionQueueType LinkedList
+    $ActionResumeRetryCount -1
 
-@(o)localhost:5514;RSYSLOG_SyslogProtocol23Format
-```
+    $WorkDirectory /var/spool/rsyslog
+
+    @(o)localhost:5514;RSYSLOG_SyslogProtocol23Format
+    ```

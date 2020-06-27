@@ -1,1 +1,1 @@
-FROM chronograf:1.7.16
+FROM chronograf:1.8.4
