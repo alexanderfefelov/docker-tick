@@ -1,4 +1,4 @@
-FROM telegraf:1.11.5
+FROM telegraf:1.14.5
 
 ADD container/ /
 
